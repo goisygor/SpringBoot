@@ -1,34 +1,37 @@
 package webapp.hello_world.Controller;
 
- import org.springframework.stereotype.Controller;
- import org.springframework.web.bind.annotation.RequestMapping;
- import org.springframework.web.bind.annotation.RequestMethod;
- import org.springframework.web.bind.annotation.RequestParam;
- import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
- /** @author Rolfi Luz - Senai * */
- @Controller public class indexController {
+/** @author Rolfi Luz - Senai * */
+@Controller
+public class indexController {
 
- @RequestMapping(value = "/", method = RequestMethod.GET)
- public ModelAndView abrirIndex() {
- ModelAndView mv = new ModelAndView("index");
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView abrirIndex() {
+        ModelAndView mv = new ModelAndView("index");
 
- String mensagem = "Olá, seja bem-vinda(o)!";
- mv.addObject("msg", mensagem);
+        String mensagem = "Olá, seja bem-vinda(o)!";
+        mv.addObject("msg", mensagem);
 
- return mv;
- }
+        return mv;
+    }
 
- @RequestMapping(value = "/", method = RequestMethod.POST)
- public ModelAndView buscarIndex(@RequestParam("buscar") String buscar) {
- ModelAndView mv = new ModelAndView("index");
+    @RequestMapping(value = "/home", method = RequestMethod.POST)
+    public ModelAndView buscarIndex(@RequestParam("nome") String nome,
+                                    @RequestParam("email") String email,
+                                    @RequestParam("telefone") String telefone) {
+        ModelAndView mv = new ModelAndView("index");
 
- String mensagem = "Resultado da Busca !";
- mv.addObject("msg", mensagem);
- mv.addObject("buscar", buscar);
+        String mensagem = "Resultado da Busca!";
+        mv.addObject("msg", mensagem);
+        mv.addObject("nome", nome);
+        mv.addObject("email", email);
+        mv.addObject("telefone", telefone);
 
- return mv;
- }
-
+        return mv;
+    }
 }
-

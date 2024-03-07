@@ -1,14 +1,13 @@
-
-package webapp.hello_world;
+package webapp.contatojdbc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class HelloWorldApplication {
+public class ContatojdbcApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(HelloWorldApplication.class, args);
+		SpringApplication.run(ContatojdbcApplication.class, args);
 	}
 
 }
