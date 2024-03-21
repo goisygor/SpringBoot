@@ -1,0 +1,17 @@
+{
+    "Produtos":[
+        {
+            "id":"1",
+            "produto":"Leite",
+            "descricao":"Desnatado",
+            "preco": 8.00
+        },
+        {
+
+            "id":"2",
+            "produto":"Arroz",
+            "descricao":"Integral",
+            "preco":30  
+        }
+    ]
+}
