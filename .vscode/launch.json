@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SpringCrudJpaApplication",
+            "request": "launch",
+            "mainClass": "webapp.spring_crud_jpa.SpringCrudJpaApplication",
+            "projectName": "spring_crud_jpa"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-HelloWorldApplication<hello_world>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
