@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "EscolaCompletoApplication",
+            "request": "launch",
+            "mainClass": "webapp.escola_completo.EscolaCompletoApplication",
+            "projectName": "escola_completo"
+        },
+        {
+            "type": "java",
             "name": "SpringCrudJpaApplication",
             "request": "launch",
             "mainClass": "webapp.spring_crud_jpa.SpringCrudJpaApplication",
