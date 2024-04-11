@@ -11,8 +11,7 @@ import webapp.escola_completo.Repository.AdministradorRepository;
 import webapp.escola_completo.Repository.VerificaCadastroAdmRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
-
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -28,23 +27,23 @@ public class AdministradorController {
 
     // métodos
     @PostMapping("cadastrar-adm")
-    public ModelAndView cadastroAdmBD(Administrador adm) {
+    public ModelAndView cadastroAdmBD(Administrador adm, RedirectAttributes attributes) {
 
         boolean verificaCpf = vcar.existsById(adm.getCpf());
 
-        ModelAndView mv = new ModelAndView("login/login-adm");
+        ModelAndView mv = new ModelAndView("redirect:/login-adm");
 
         if (verificaCpf) {
             ar.save(adm);
             String mensagem = "Cadastro Realizado com sucesso";
             System.out.println(mensagem);
-            mv.addObject("msg", mensagem);
-            mv.addObject("classe", "verde");
+            attributes.addFlashAttribute("msg", mensagem);
+            attributes.addFlashAttribute("classe", "vermelho");
         } else {
             String mensagem = "Cadastro Não Realizado";
             System.out.println(mensagem);
-            mv.addObject("msg", mensagem);
-            mv.addObject("classe", "vermelho");
+            attributes.addFlashAttribute("msg", mensagem);
+            attributes.addFlashAttribute("classe", "vermelho");
         }
 
         return mv;
@@ -61,11 +60,7 @@ public class AdministradorController {
             boolean acessoSenha = senha.equals(ar.findByCpf(cpf).getSenha());
 
             if (acessoCPF && acessoSenha) {
-                String mensagem = "Login Realizado com sucesso";
-                System.out.println(mensagem);
                 acessoInternoAdm = true;
-                mv.addObject("msg", mensagem);
-                mv.addObject("classe", "verde");
             } else {
                 String mensagem = "Login Não Efetuado";
                 System.out.println(mensagem);
@@ -73,18 +68,20 @@ public class AdministradorController {
                 attributes.addFlashAttribute("classe", "vermelho");
                 mv.setViewName("redirect:/login-adm");
             }
-
+            return mv;
+            
         } catch (Exception e) {
             String mensagem = "Login Não Efetuado";
             System.out.println(mensagem);
             attributes.addFlashAttribute("msg", mensagem);
             attributes.addFlashAttribute("classe", "vermelho");
             mv.setViewName("redirect:/login-adm");
+            return mv;
         }
-        return mv;
+       
     }
 
-    @GetMapping("/interna-adm.html")
+    @GetMapping("/interna-adm")
     public ModelAndView acessoPageInternaAdm(RedirectAttributes attributes) {
         ModelAndView mv = new ModelAndView("interna/interna-adm");
         if (acessoInternoAdm) {
@@ -96,27 +93,15 @@ public class AdministradorController {
             attributes.addFlashAttribute("msg", mensagem);
             attributes.addFlashAttribute("classe", "vermelho");
         }
-
         return mv;
     }
 
-    // @GetMapping("/interna-adm")
-    // public String acessoPageInternaAdm() {
-    // String acesso = "";
-    // ModelAndView mv = new ModelAndView();
-    // if (acessoInternoAdm) {
-    // System.out.println("Acesso Permitido");
-    // acesso = "interna/interna-adm";
-
-    // } else{
-    // String mensagem = "Acesso não Permitido - faça Login";
-    // System.out.println(mensagem);
-    // acesso = "login/login-adm";
-    // mv.addObject("msg", mensagem);
-    // mv.addObject("classe", "vermelho");
-    // }
-
-    // return acesso;
-    // }
-
+    @PostMapping("logout-adm")
+    public ModelAndView logoutAdm(RedirectAttributes attributes) {
+        ModelAndView mv = new ModelAndView("redirect:/interna-adm");
+        attributes.addFlashAttribute("msg", "Logout Efetuado");
+        attributes.addFlashAttribute("classe", "verde");
+        acessoInternoAdm = false;
+        return mv;
+    }
 }

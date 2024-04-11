@@ -27,6 +27,8 @@ public class IndexController {
     public String acessoCadastroAdm() {
         return "cadastro/cadastro-adm";
     }
+   
+    
     
     
     

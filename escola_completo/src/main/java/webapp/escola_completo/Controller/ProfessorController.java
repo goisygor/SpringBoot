@@ -17,14 +17,16 @@ public class ProfessorController {
     @Autowired
     private VerificaCadProfRepository vcar;
 
-    @PostMapping("/cad-prof")
+    @PostMapping("/cad-professor")
     public String postCadProf(Professor prof) {
         String cpfVerificar = vcar.findByCpf(prof.getCpf()).getCpf();
         if (cpfVerificar.equals(prof.getCpf())) {
             ar.save(prof);
         }
 
-        return "prof/login-prof";
+        return "professor/login-professor";
+
+
     }
 
 }

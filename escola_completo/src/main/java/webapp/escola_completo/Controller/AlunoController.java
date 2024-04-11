@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import webapp.escola_completo.Model.Aluno;
 import webapp.escola_completo.Repository.VerificaCadastroAlunoRepository;
-import webapp.escola_completo.Repository.alunoRepository;
+import webapp.escola_completo.Repository.AlunoRepository;
 
 
 
@@ -19,7 +19,7 @@ import webapp.escola_completo.Repository.alunoRepository;
 public class AlunoController {
     boolean acessoInternoAluno= false; 
     @Autowired
-    private alunoRepository ar;
+    private AlunoRepository ar;
     @Autowired
     private VerificaCadastroAlunoRepository  vcar;
 
