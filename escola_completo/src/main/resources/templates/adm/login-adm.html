@@ -11,7 +11,8 @@
 <body>
     <div th:insert="~{fragments/header :: header}"><!-- barra de menu -->...</div>
     <div class="container">
-   
+        <span th:text="${msg}"></span>
+
         <div class="login-container">
         
             <form action="/acesso-adm" method="post">
@@ -30,7 +31,6 @@
                 <button type="button" class="btn-cadastrar" onclick="window.location.href='cad-adm';">
                     <i class="fas fa-user-plus"></i> Cadastrar
                 </button>
-                <span th:text="${msg}"></span>
             </form>
             
         </div>

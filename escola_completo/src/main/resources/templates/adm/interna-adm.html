@@ -37,11 +37,24 @@
     </style>
 </head>
 <body>
+                    <span th:text="${msg}"></span>
+
     <div th:insert="~{fragments/header :: header}"><!-- barra de menu -->...</div>
     <div class="container">
+        <span th:text="${msg}"></span>
+
         <h2>Bem-vindo, Administrador!</h2>
         <p>Você fez login com sucesso.</p>
-        <button class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Sair</button>
+        <br>
+        <h2>Interface Interna do Administrador</h2>
+        <ul>
+            <li><a href="cad-aluno">Matrícula do Aluno</a></li>
+            <li><a href="/cad-prof">Cadastro do Docente</a></li>
+            <li><a href="/controle-disciplinas">Controle das Disciplinas</a></li>
+            <form action="logout-adm" method="post">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Sair</button>
+            </form>
+            
     </div>
 </body>
 </html>

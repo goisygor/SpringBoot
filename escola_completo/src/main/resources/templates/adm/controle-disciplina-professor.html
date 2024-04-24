@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Cabeçalho omitido para manter o foco no conteúdo -->
+</head>
+<body>
+    <div class="container">
+        <h1>Associação de Disciplina ao Professor</h1>
+        
+        <form action="/cad-prof" method="post">
+            <div class="mb-3">
+                <label for="professor">Selecione o Professor:</label>
+                <select class="form-select" id="professor" name="cpfProfessor">
+                    <option value="">Selecione...</option>
+                    <option th:each="professor : ${professores}" th:value="${professor.cpf}" th:text="${professor.nome}"></option>
+                </select>
+                
+                <label for="disciplina">Selecione a Disciplina:</label>
+                <select class="form-select" id="disciplina" name="idDisciplina">
+                    <option value="">Selecione...</option>
+                    <option th:each="disciplina : ${disciplinas}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+                </select>
+                
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Associar Disciplina ao Professor</button>
+        </form>
+    </div>
+</body>
+</html>

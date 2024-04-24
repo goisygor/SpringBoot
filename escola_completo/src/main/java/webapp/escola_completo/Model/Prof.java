@@ -1,11 +1,13 @@
 package webapp.escola_completo.Model;
 
+
+
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 @Entity
-public class Professor  implements Serializable {
+public class Prof  implements Serializable {
     @Id
     private String cpf;
     private String nome;

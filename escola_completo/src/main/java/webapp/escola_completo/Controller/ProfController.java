@@ -10,30 +10,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import webapp.escola_completo.Model.Aluno;
-import webapp.escola_completo.Repository.AlunoRepository;
-import webapp.escola_completo.Repository.VerificaCadastroAlunoRepository;
-
+import webapp.escola_completo.Repository.ProfRepository;
+import webapp.escola_completo.Repository.VerificaCadProfRepository;
 
 
 
 @Controller
-public class AlunoController {
-    boolean acessoInternoAluno = false;
+public class ProfController {
+    boolean acessoInternoProf = false;
     @Autowired
-    private AlunoRepository ar;
+    private ProfRepository ar;
     @Autowired
-    private VerificaCadastroAlunoRepository vcar;
+    private VerificaCadProfRepository vcar;
 
-    @PostMapping("/cad-aluno")
-    public ModelAndView cadastroAlunoBd(Aluno aluno) {
+    @PostMapping("/cad-professor")
+    public ModelAndView cadastroProfBd(ProfRepository prof) {
 
-        boolean verificaCpf = vcar.existsById(aluno.getCpf());
+        boolean verificaCpf = vcar.existsById(prof.getCpf());
 
-        ModelAndView mv = new ModelAndView("aluno/login-aluno");
+        ModelAndView mv = new ModelAndView("professor/login-professor");
 
         if (verificaCpf) {
-            ar.save(aluno);
+            ar.save(prof);
             String mensagem = "Cadastro Realizado com sucesso";
             System.out.println(mensagem);
             mv.addObject("msg", mensagem);
@@ -48,11 +46,11 @@ public class AlunoController {
         return mv;
     }
 
-    @PostMapping("acesso-aluno")
-    public ModelAndView acessoAlunoLogin(@RequestParam String cpf,
+    @PostMapping("acesso-prof")
+    public ModelAndView acessProfLogin(@RequestParam String cpf,
             @RequestParam String senha,
             RedirectAttributes attributes) {
-        ModelAndView mv = new ModelAndView("redirect:/interna-aluno");// página interna de acesso
+        ModelAndView mv = new ModelAndView("redirect:/interna-prof");// página interna de acesso
         try {
             // boolean acessoCPF = cpf.equals(ar.findByCpf(cpf).getCpf());
             boolean acessoCPF = ar.existsById(cpf);
@@ -61,7 +59,7 @@ public class AlunoController {
             if (acessoCPF && acessoSenha) {
                 String mensagem = "Login Realizado com sucesso";
                 System.out.println(mensagem);
-                acessoInternoAluno = true;
+                acessoInternoProf = true;
                 mv.addObject("msg", mensagem);
                 mv.addObject("classe", "verde");
             } else {
@@ -82,15 +80,15 @@ public class AlunoController {
         return mv;
     }
 
-    @GetMapping("/interna-aluno")
-    public ModelAndView acessoPageInternaAluno(RedirectAttributes attributes) {
-        ModelAndView mv = new ModelAndView("aluno/interna-aluno");
-        if (acessoInternoAluno) {
+    @GetMapping("/interna-prof")
+    public ModelAndView acessoPageInternaprof(RedirectAttributes attributes) {
+        ModelAndView mv = new ModelAndView("prof/interna-prof");
+        if (acessoInternoProf) {
             System.out.println("Acesso Permitido");
         } else {
             String mensagem = "Acesso não Permitido - faça Login";
             System.out.println(mensagem);
-            mv.setViewName("redirect:/login-aluno");
+            mv.setViewName("redirect:/login-prof");
             attributes.addFlashAttribute("msg", mensagem);
             attributes.addFlashAttribute("classe", "vermelho");
         }

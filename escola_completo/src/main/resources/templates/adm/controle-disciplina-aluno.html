@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Meta tags, título, links para CSS -->
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro de Disciplina Professor</h1>
+        <form action="/cadastrar-disciplina" method="post">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome da Disciplina:</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="mb-3">
+                <label for="professor" class="form-label">Professor:</label>
+                <select class="form-select" id="professor" name="professor" required>
+                    <option value="">Selecione um professor</option>
+                    <!-- Loop para exibir a lista de professores cadastrados -->
+                    <option th:each="professor : ${professores}" th:value="${professor.cpf}" th:text="${professor.nome}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cadastrar Disciplina</button>
+        </form>
+    </div>
+</body>
+</html>

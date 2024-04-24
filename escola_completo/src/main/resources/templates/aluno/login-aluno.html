@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/"></html>>
 <head>
@@ -14,23 +13,26 @@
     <div class="container">
       
         <div class="login-container">
+        
             <form action="/acesso-aluno" method="post">
                 <h2>Login do Aluno</h2>
                 <div class="form-group">
-                    <label for="username">Cpf:</label>
-                    <input type="text" id="username" name="cpf" required>
+                    <label for="username">Cpf do Usuário:</label>
+                    <input type="text" name="cpf" >
                 </div>
                 <div class="form-group">
                     <label for="password">Senha:</label>
-                    <input type="password" id="password" name="senha" required>
+                    <input type="password"  name="senha" >
                 </div>
                 <button type="submit">
                     <i class="fas fa-sign-in-alt"></i> Entrar
                 </button>
-                <button type="button" class="btn-cadastrar" onclick="window.location.href='cad-aluno';">
+                <button type="button" class="btn-cadastrar" onclick="window.location.href='cad-adm';">
                     <i class="fas fa-user-plus"></i> Cadastrar
                 </button>
+                <span th:text="${msg}"></span>
             </form>
+            
         </div>
         
         
