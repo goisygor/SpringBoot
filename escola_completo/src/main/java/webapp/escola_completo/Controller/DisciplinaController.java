@@ -1,23 +1,15 @@
 package webapp.escola_completo.Controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import org.springframework.web.servlet.ModelAndView;
-
 import webapp.escola_completo.Model.Disciplina;
 import webapp.escola_completo.Model.Prof;
 import webapp.escola_completo.Repository.DisciplinaRepository;
 import webapp.escola_completo.Repository.ProfRepository;
-
 import java.util.List;
-
-
-
-
 
 @Controller
 public class DisciplinaController {
@@ -32,7 +24,7 @@ public class DisciplinaController {
     public ModelAndView listarDisciplinas() {
         ModelAndView modelAndView = new ModelAndView("listar-disciplinas");
         Iterable<Disciplina> disciplinas = disciplinaRepository.findAll();
-        modelAndView.addObject("disciplina", disciplinas);
+        modelAndView.addObject("disciplinas", disciplinas);
         return modelAndView;
     }
 

@@ -1,7 +1,5 @@
 package webapp.escola_completo.Controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,32 +12,30 @@ import webapp.escola_completo.Model.Aluno;
 import webapp.escola_completo.Repository.AlunoRepository;
 import webapp.escola_completo.Repository.VerificaCadastroAlunoRepository;
 
-
-
-
 @Controller
 public class AlunoController {
+
     boolean acessoInternoAluno = false;
-    @Autowired
-    private AlunoRepository ar;
-    @Autowired
-    private VerificaCadastroAlunoRepository vcar;
 
-    @PostMapping("/cad-aluno")
+    @Autowired
+    private AlunoRepository alunoRepository;
+
+    @Autowired
+    private VerificaCadastroAlunoRepository verificaCadastroAlunoRepository;
+
+    @PostMapping("/cadastro-aluno")
     public ModelAndView cadastroAlunoBd(Aluno aluno) {
-
-        boolean verificaCpf = vcar.existsById(aluno.getCpf());
-
+        boolean verificaCpf = verificaCadastroAlunoRepository.existsById(aluno.getCpf());
         ModelAndView mv = new ModelAndView("aluno/login-aluno");
 
         if (verificaCpf) {
-            ar.save(aluno);
-            String mensagem = "Cadastro Realizado com sucesso";
+            alunoRepository.save(aluno);
+            String mensagem = "Cadastro realizado com sucesso";
             System.out.println(mensagem);
             mv.addObject("msg", mensagem);
             mv.addObject("classe", "verde");
         } else {
-            String mensagem = "Cadastro Não Realizado";
+            String mensagem = "Cadastro não realizado";
             System.out.println(mensagem);
             mv.addObject("msg", mensagem);
             mv.addObject("classe", "vermelho");
@@ -48,47 +44,41 @@ public class AlunoController {
         return mv;
     }
 
-    @PostMapping("acesso-aluno")
-    public ModelAndView acessoAlunoLogin(@RequestParam String cpf,
-            @RequestParam String senha,
+    @PostMapping("/acesso-aluno")
+    public ModelAndView acessoAlunoLogin(@RequestParam String cpf, @RequestParam String senha,
             RedirectAttributes attributes) {
-        ModelAndView mv = new ModelAndView("redirect:/interna-aluno");// página interna de acesso
-        try {
-            // boolean acessoCPF = cpf.equals(ar.findByCpf(cpf).getCpf());
-            boolean acessoCPF = ar.existsById(cpf);
-            boolean acessoSenha = senha.equals(ar.findByCpf(cpf).getSenha());
+        ModelAndView mv = new ModelAndView("redirect:/interna-aluno");
 
-            if (acessoCPF && acessoSenha) {
-                String mensagem = "Login Realizado com sucesso";
+        try {
+            boolean acessoCpf = alunoRepository.existsById(cpf);
+            Aluno aluno = alunoRepository.findByCpf(cpf);
+
+            if (acessoCpf && aluno.getSenha().equals(senha)) {
+                String mensagem = "Login realizado com sucesso";
                 System.out.println(mensagem);
                 acessoInternoAluno = true;
                 mv.addObject("msg", mensagem);
                 mv.addObject("classe", "verde");
             } else {
-                String mensagem = "Login Não Efetuado";
-                System.out.println(mensagem);
-                attributes.addFlashAttribute("msg", mensagem);
-                attributes.addFlashAttribute("classe", "vermelho");
-                mv.setViewName("redirect:/login-adm");
+                throw new Exception();
             }
-
         } catch (Exception e) {
-            String mensagem = "Login Não Efetuado";
+            String mensagem = "Login não efetuado";
             System.out.println(mensagem);
             attributes.addFlashAttribute("msg", mensagem);
             attributes.addFlashAttribute("classe", "vermelho");
-            mv.setViewName("redirect:/login-adm");
+            mv.setViewName("redirect:/login-aluno");
         }
+
         return mv;
     }
 
     @GetMapping("/interna-aluno")
     public ModelAndView acessoPageInternaAluno(RedirectAttributes attributes) {
         ModelAndView mv = new ModelAndView("aluno/interna-aluno");
-        if (acessoInternoAluno) {
-            System.out.println("Acesso Permitido");
-        } else {
-            String mensagem = "Acesso não Permitido - faça Login";
+
+        if (!acessoInternoAluno) {
+            String mensagem = "Acesso não permitido - faça login";
             System.out.println(mensagem);
             mv.setViewName("redirect:/login-aluno");
             attributes.addFlashAttribute("msg", mensagem);
@@ -97,5 +87,4 @@ public class AlunoController {
 
         return mv;
     }
-
 }
